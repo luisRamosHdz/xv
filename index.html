@@ -63,6 +63,24 @@
             background-blend-mode: overlay, normal, normal, normal, normal;
         }
 
+		.icono-sobre-dinero {
+    position: relative;
+    font-size: 3rem;
+    color: var(--color-primario-oscuro);
+    display: inline-block;
+	color: white;
+}
+
+.icono-sobre-dinero .fa-dollar-sign {
+    position: absolute;
+    font-size: .9rem;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-primario);
+	color: white;
+}
+
         /* CONTENEDOR PRINCIPAL CON SCROLL SNAPPING */
         .scroll-container {
             height: 100vh;
@@ -105,8 +123,8 @@
         .contenedor { width: 100%; max-width: 480px; margin: 0 auto; }
 
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-                url('https://cdn.pixabay.com/photo/2016/11/08/05/26/lavender-1807550_1280.jpg')
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+                url('assets/img/15era.jpeg')
                 no-repeat center center/cover;
             color: white;
             text-align: center;
@@ -548,6 +566,95 @@
 
         /* Audio oculto (sin barra) */
         audio#musica-fondo { display: none !important; }
+		/* ===== Confirmación estilo card blanca ===== */
+.form-confirmacion {
+  text-align: left;
+  margin-top: 10px;
+}
+.form-confirmacion .btn-confirmar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto 0;
+    width: fit-content;
+}
+
+.form-confirmacion .fila-meta{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 0 18px;
+  color: #6b5b7e;
+  font-weight: 600;
+}
+
+.form-confirmacion .fila-meta i{
+  color: #7e57c2;
+}
+
+.form-confirmacion label.titulo-campo{
+  display:block;
+  font-weight: 600;
+  color: #5e4b7c;
+  margin: 14px 0 8px;
+  text-align: left;
+}
+
+.form-confirmacion .input-box{
+  width: 100%;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(179,157,216,0.55);
+  background: #fbf8ff;
+  color: #4a4a4a;
+  font-size: 1.05rem;
+  outline: none;
+}
+
+.form-confirmacion .input-box:focus{
+  border-color: rgba(149,117,205,0.9);
+  box-shadow: 0 0 0 4px rgba(179,157,216,0.25);
+}
+
+.form-confirmacion .confirmo{
+  margin-top: 16px;
+  font-weight: 700;
+  color: #5e4b7c;
+}
+
+.form-confirmacion .opciones{
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.form-confirmacion .radio-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(179,157,216,0.55);
+  background: #fbf8ff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-confirmacion input[type="radio"]{
+  accent-color: var(--color-primario-oscuro);
+  width: 18px;
+  height: 18px;
+}
+
+.form-confirmacion .nota{
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #9b9b9b;
+}
     </style>
 </head>
 
@@ -686,7 +793,7 @@
           max-width: 420px;
           margin: 20px auto 0;
       ">
-        Tienen el honor de invitarlos a la misa de acción de gracias con motivo del XV aniversario de nuestra querida hija.
+        Tenemos el honor de invitarlos a la misa de acción de gracias con motivo del XV aniversario de nuestra querida hija.
       </p>
 
       <!-- Línea decorativa inferior -->
@@ -830,27 +937,25 @@
                 <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 20px 0;">
                     <div style="text-align: center;">
                         <i class="fa-solid fa-user-tie" style="font-size: 2rem; color: #7e57c2;"></i>
-                        <p style="margin-top: 5px; color: #6b5b7e;">Caballero</p>
-                        <small style="color: #9b9b9b;">Traje formal</small>
+                        <p style="margin-top: 5px; color: #6b5b7e;">Caballero</p>                        
                     </div>
                     <div style="text-align: center;">
                         <i class="fa-solid fa-person-dress" style="font-size: 2rem; color: #7e57c2;"></i>
-                        <p style="margin-top: 5px; color: #6b5b7e;">Dama</p>
-                        <small style="color: #9b9b9b;">Vestido largo</small>
+                        <p style="margin-top: 5px; color: #6b5b7e;">Dama</p>                        
                     </div>
                 </div>
 
                 <p style="font-style: italic; color: #6b5b7e; margin-top: 15px; padding: 0 10px;">
-                    "Para hacer de este día aún más especial, agradecemos seguir el código de vestimenta formal"
+                    Vestimenta formal y listo para disfrutar, solo te pedimos evitar tonos rosas y morados.
                 </p>
 
-                <div style="margin-top: 20px;">
+                <div style="margin-top: 20px;  font-size: 13px;">
                     <p style="color: #5e4b7c; margin-bottom: 10px;">Por favor, evitar estos colores:</p>
                     <div style="display: flex; justify-content: center; gap: 10px;">
-                        <span style="width: 30px; height: 30px; border-radius: 50%; background: #b39dd8; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
-                        <span style="width: 30px; height: 30px; border-radius: 50%; background: #9575cd; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
-                        <span style="width: 30px; height: 30px; border-radius: 50%; background: #7e57c2; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
-                        <span style="width: 30px; height: 30px; border-radius: 50%; background: #f3e5f5; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
+                        <span style="width: 40px; height: 40px; border-radius: 50%; background: #b39dd8; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
+                        <span style="width: 40px; height: 40px; border-radius: 50%; background: #9575cd; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
+                        <span style="width: 40px; height: 40px; border-radius: 50%; background: #7e57c2; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
+                        <span style="width: 40px; height: 40px; border-radius: 50%; background: #f5c3d8; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"></span>
                     </div>
                 </div>
             </div>
@@ -869,50 +974,32 @@
 
                 <h2 style="margin-bottom: 15px;">Mesa de Regalos</h2>
 
-                <p style="font-size: 1.3rem; color: #5e4b7c; font-style: italic; margin-bottom: 20px;">
-                    "El mejor regalo es tu presencia"
-                </p>
-
-                <p style="color: #6b5b7e; margin-bottom: 25px; font-size: 1.1rem;">
-                    Pero si deseas tener un detalle conmigo<br>
-                    en este día tan especial, te comparto mis opciones:
-                </p>
-
                 <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0;">
 
                     <div style="text-align: center; flex: 1 1 250px; background: #f9f5ff; padding: 25px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                         <div style="background: var(--color-primario); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-                            <i class="fa-regular fa-envelope" style="font-size: 2.5rem; color: white;"></i>
+                            <div class="icono-sobre-dinero">
+    <i class="fa-regular fa-envelope"></i>
+    <i class="fa-solid fa-dollar-sign"></i>
+</div>
                         </div>
                         <h3 style="font-size: 1.4rem; margin-bottom: 10px; color: #7e57c2;">Lluvia de sobres</h3>
                         <p style="color: #6b5b7e; font-size: 1rem; line-height: 1.5;">
-                            El día de mi fiesta tendremos<br>
-                            un <strong>buzón decorado</strong> donde<br>
-                            podrás depositar tus mejores deseos.
+                            Tu presencia sera mi mejor regalo, <br>
+					pero si no sabes que regalarme...<br>
+					un sobrecito me hará muy feliz.
                         </p>
                         <div style="margin-top: 15px; color: #9575cd;">
                             <i class="fa-regular fa-heart"></i> ¡Cada detalle cuenta! <i class="fa-regular fa-heart"></i>
                         </div>
                     </div>
-
-                    <div style="text-align: center; flex: 1 1 250px; background: #f9f5ff; padding: 25px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                        <div style="background: var(--color-primario); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
-                            <i class="fa-regular fa-gem" style="font-size: 2.5rem; color: white;"></i>
-                        </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 10px; color: #7e57c2;">Detalle especial</h3>
-                        <p style="color: #6b5b7e; font-size: 1rem; line-height: 1.5;">
-                            Si prefieres regalarme algo,<br>
-                            te dejo algunas ideas:<br>
-                            <strong>✨ Joyas · Perfumes · Ropa · Zapatos ✨</strong>
-                        </p>
-                    </div>
                 </div>
 
                 <div style="margin-top: 30px; padding: 15px; background: linear-gradient(145deg, #f3e5f5, #e1d5f0); border-radius: 50px;">
-                    <p style="color: #5e4b7c; font-size: 1rem;">
+                    <p style="color: #5e4b7c; font-size: .8rem;">
                         <i class="fa-regular fa-star" style="color: #7e57c2;"></i>
-                        Lo más importante es que me acompañes a celebrar<br>
-                        <strong>mis 15 años</strong> rodeada de las personas que quiero.
+                        Lo más importante es que me acompañes a celebrar
+                        <strong>mis 15 años</strong><br> rodeada de las personas que quiero.
                         <i class="fa-regular fa-star" style="color: #7e57c2;"></i>
                     </p>
                 </div>
@@ -926,24 +1013,54 @@
 
     <!-- SECCIÓN 7: CONFIRMACIÓN -->
     <section id="seccion7">
-        <div class="contenedor">
-            <div class="tarjeta" style="background: #ffffff;">
-                <h3 style="font-size: 2rem; margin-bottom: 8px;">Confirmación</h3>
-                <p style="margin-bottom: 16px;">de asistencia</p>
-                <p style="max-width: 300px; margin: 0 auto 20px;">
-                    Lo más importante para nosotros es tu compañía. Agradecemos confirmar tu asistencia en el siguiente botón:
-                </p>
-                <a 
-  href="https://wa.me/525525006851?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20los%20XV%20de%20Andrea%20Ayl%C3%A9n.%20%F0%9F%92%9C"
-  class="btn-confirmar"
-  target="_blank"
-  style="color: white;">
-  <i class="fa-brands fa-whatsapp" style="color: white;"></i> CONFIRMAR ASISTENCIA
-</a>
-            </div>
-            <p style="text-align: center; color: #b39dd8; margin: 30px 0;">✨ Te esperamos para compartir juntos este día tan especial ✨</p>
+  <div class="contenedor">
+    <div class="tarjeta" style="background: #ffffff;">
+      <h3 style="font-size: 2rem; margin-bottom: 8px; text-align:center;">Confirmación</h3>
+      <p style="margin-bottom: 16px; text-align:center;">de asistencia</p>
+
+      <div class="form-confirmacion">
+
+        <div class="fila-meta">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Número de pases: <strong id="pasesTxt" style="color:#7e57c2;">4</strong></span>
         </div>
-    </section>
+
+        <label class="titulo-campo" for="nombreInvitado">Nombre / Familia</label>
+        <input
+          id="nombreInvitado"
+          class="input-box"
+          type="text"
+          value="FAM. DURAN HERNANDEZ"
+          placeholder="Ej. FAM. PÉREZ GONZÁLEZ"
+        />
+
+        <div class="confirmo">Confirmo que:</div>
+
+        <div class="opciones">
+          <label class="radio-pill">
+            <input type="radio" name="asistencia" value="Asistiré" checked>
+            <span>Asistiré</span>
+          </label>
+
+          <label class="radio-pill">
+            <input type="radio" name="asistencia" value="No asistiré">
+            <span>No asistiré</span>
+          </label>
+        </div>
+
+        <div class="btn-confirmar">
+			<a href="#"  style="color: white;" id="btnWhats">
+          <i class="fa-brands fa-whatsapp"></i> CONFIRMAR
+        </a>  
+		</div>      
+      </div>
+    </div>
+
+    <p style="text-align: center; color: #b39dd8; margin: 30px 0;">
+      ✨ Te esperamos para compartir juntos este día tan especial ✨
+    </p>
+  </div>
+</section>
 
     <!-- FOOTER -->
     <footer id="footer">
@@ -1057,6 +1174,37 @@
     }
 
     btnAbrir.addEventListener('click', abrirInvitacion);
+
+	// =========================
+// CONFIRMACIÓN POR WHATSAPP
+// =========================
+const WHATS_NUM = "525525006851"; // 52 + 55 2500 6851
+
+const btnWhats = document.getElementById("btnWhats");
+const nombreInvitado = document.getElementById("nombreInvitado");
+const pasesTxt = document.getElementById("pasesTxt");
+
+function getAsistencia() {
+  const sel = document.querySelector('input[name="asistencia"]:checked');
+  return sel ? sel.value : "Asistiré";
+}
+
+btnWhats.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const nombre = (nombreInvitado.value || "").trim();
+  const pases = (pasesTxt?.textContent || "").trim() || "4";
+  const asistencia = getAsistencia();
+
+  const msg =
+    `Hola 👋, soy *${nombre || "Invitado"}*.\n` +
+    `*${asistencia}* a los XV de Andrea Aylén.\n` +
+    `Pases: *${pases}*.\n` +
+    `¡Gracias! 💜`;
+
+  const url = `https://wa.me/${WHATS_NUM}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+});
 </script>
 
 </body>
