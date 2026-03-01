@@ -57,7 +57,7 @@ const CANDIDATE_PATHS = [
   // try repo-root relative using pathname base (useful if repo served from /<user>/<repo>/)
   window.location.pathname.replace(/\/[^\/]*$/, "") + "./invitados.xlsx",
   // try ../ in case admin.html inside folder
-  "../assets/data/invitados.xlsx",
+  "./assets/data/invitados.xlsx",
   // try docs folder as some pages publish from /docs
   "docs/assets/data/invitados.xlsx",
   "/docs/assets/data/invitados.xlsx"
