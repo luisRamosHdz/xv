@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin · Invitados</title>
+
+  <!-- Leer Excel en navegador -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+
+  <style>
+    :root{
+      --color-primario:#b39dd8;
+      --color-primario-oscuro:#9575cd;
+      --color-texto:#4a4a4a;
+      --sombra:0 4px 16px rgba(149,117,205,.15);
+      --fuente:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    }
+    body{font-family:var(--fuente); background:#f3e9ff; padding:20px; color:var(--color-texto);}
+    .card{max-width:1100px; margin:0 auto; background:#fff; border-radius:18px; padding:18px; box-shadow:var(--sombra);}
+    h1{margin:0 0 6px; font-size:1.35rem;}
+    .hint{color:#6b5b7e; font-size:.95rem; margin:6px 0 12px;}
+    .ok{color:#2e7d32; font-weight:800;}
+    .bad{color:#b00020; font-weight:800;}
+    .pill{display:inline-block; padding:3px 10px; border-radius:999px; background:#f6f0ff; border:1px solid #e7ddff; font-size:.85rem;}
+    table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius:14px; margin-top:14px;}
+    th,td{padding:10px; border-bottom:1px solid #eee; vertical-align:top;}
+    th{background:#f6f0ff; text-align:left;}
+    .url{word-break:break-all; font-size:.95rem;}
+    .actions{display:flex; gap:8px; flex-wrap:wrap;}
+    .btn-mini{
+      padding:8px 10px; border-radius:10px; font-weight:900; border:0; cursor:pointer;
+      background:var(--color-primario-oscuro); color:#fff;
+    }
+    .btn-mini:active{transform: translateY(1px);}
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>Invitados · Tabla + URLs</h1>
+    <div class="hint">
+      Excel (BBDD): <span class="pill" id="xlsPath"></span> ·
+      URLs sin GET: <span class="pill">index.html#ID</span>
+    </div>
+
+    <div id="estado" class="hint">Cargando…</div>
+    <div id="out"></div>
+  </div>
+
+<script>
+  // ✅ Tu Excel “BBDD” en assets
+  const XLSX_PATH = "assets\\data\\invitados.xlsx";
+  document.getElementById("xlsPath").textContent = XLSX_PATH;
+
+  const estado = document.getElementById("estado");
+  const out = document.getElementById("out");
+
+  // Base URL automática: mismo folder del admin, apunta a index.html
+  // Ej: https://.../admin.html -> https://.../index.html
+  const BASE_INVITACION = window.location.href.replace(/admin\.html(\?.*)?(#.*)?$/i, "index.html");
+
+  function norm(s){
+    return String(s ?? "")
+      .trim().toLowerCase()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "");
+  }
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;");
+  }
+  function buildUrl(id){
+    // ✅ SIN GET → usando hash
+    return BASE_INVITACION + "#" + encodeURIComponent(id);
+  }
+
+  async function cargarXlsxDesdeAssets(){
+    const res = await fetch(XLSX_PATH, { cache: "no-store" });
+    if(!res.ok) throw new Error(`No pude cargar el Excel (${res.status}). Revisa que exista: ${XLSX_PATH}`);
+    const buf = await res.arrayBuffer();
+    const wb = XLSX.read(buf, { type: "array" });
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    return XLSX.utils.sheet_to_json(ws, { defval: "" });
+  }
+
+  function mapRow(r){
+    // mapeo flexible de headers
+    const map = {};
+    Object.keys(r).forEach(k => map[norm(k)] = r[k]);
+
+    return {
+      id: String(map["id"] ?? map["codigo"] ?? map["clave"] ?? "").trim(),
+      nombre: String(
+        map["nombre"] ??
+        map["nombreeninvitacion"] ??
+        map["nombreenlainvitacion"] ??
+        map["nombrefamilia"] ?? ""
+      ).trim(),
+      pases: String(
+        map["pases"] ??
+        map["numdepases"] ??
+        map["numerodepases"] ??
+        map["numpases"] ?? ""
+      ).trim()
+    };
+  }
+
+  function renderTable(rows){
+    out.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th style="width:140px;">id</th>
+            <th>nombre en invitación</th>
+            <th style="width:110px;">pases</th>
+            <th>url</th>
+            <th style="width:140px;">acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((r, i) => {
+            const url = buildUrl(r.id);
+            return `
+              <tr>
+                <td><strong>${esc(r.id)}</strong></td>
+                <td>${esc(r.nombre)}</td>
+                <td>${esc(r.pases)}</td>
+                <td class="url">${esc(url)}</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn-mini" data-copy="${i}">Copiar URL</button>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    `;
+
+    // Copiar
+    out.querySelectorAll("button[data-copy]").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const idx = Number(btn.getAttribute("data-copy"));
+        const url = buildUrl(rows[idx].id);
+        try{
+          await navigator.clipboard.writeText(url);
+          const old = btn.textContent;
+          btn.textContent = "✅ Copiado";
+          setTimeout(()=> btn.textContent = old, 900);
+        }catch(e){
+          alert("No pude copiar. Copia manual:\n\n" + url);
+        }
+      });
+    });
+  }
+
+  async function init(){
+    try{
+      const raw = await cargarXlsxDesdeAssets();
+      const rows = raw.map(mapRow).filter(x => x.id);
+
+      if(!rows.length){
+        estado.innerHTML = `<span class="bad">❌ No encontré filas con columna "id". Revisa headers: id | nombre | pases</span>`;
+        out.innerHTML = "";
+        return;
+      }
+
+      const incompletas = rows.filter(x => !x.nombre || !x.pases);
+      if(incompletas.length){
+        estado.innerHTML = `<span class="bad">⚠ ${incompletas.length} filas incompletas (faltan nombre o pases). Igual genero la tabla.</span>`;
+      } else {
+        estado.innerHTML = `<span class="ok">✅ Cargados ${rows.length} invitados desde ${esc(XLSX_PATH)}.</span>`;
+      }
+
+      renderTable(rows);
+    }catch(err){
+      console.error(err);
+      estado.innerHTML = `<span class="bad">❌ ${esc(err.message)}</span>
+        <div class="hint">
+          Asegúrate de:
+          <br>• Tener el archivo en <strong>${esc(XLSX_PATH)}</strong>
+          <br>• Abrir esto desde tu sitio (GitHub Pages), no desde <strong>file:///</strong>
+        </div>`;
+      out.innerHTML = "";
+    }
+  }
+
+  // ✅ Carga automática al abrir
+  document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
