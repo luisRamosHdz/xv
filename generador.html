@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Admin · Invitados (diagnóstico automático)</title>
 
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
   :root{--p:#b39dd8;--pd:#9575cd;--txt:#4a4a4a;--s:0 6px 22px rgba(0,0,0,0.06);}
@@ -49,10 +49,7 @@
 
 <script>
 /* CONFIG */
-const CANDIDATE_PATHS = [
-  // try repo-root relative using pathname base (useful if repo served from /<user>/<repo>/)
-  window.location.pathname.replace(/\/[^\/]*$/, "") + "./invitados.xlsx",
-  // try ../ in case admin.html inside folder
+const CANDIDATE_PATHS = [  
   "./assets/data/invitados.xlsx",
   // try docs folder as some pages publish from /docs
 ];
